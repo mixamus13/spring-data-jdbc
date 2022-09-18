@@ -19,7 +19,7 @@ public class HumanController {
         return humanService.getAllHuman();
     }
 
-    @GetMapping("/api/humanBuId/{id}")
+    @GetMapping("/api/humanById/{id}")
     public Optional<Human> getHumanById(@PathVariable("id") long id) {
         return humanService.getHumanById(id);
     }
