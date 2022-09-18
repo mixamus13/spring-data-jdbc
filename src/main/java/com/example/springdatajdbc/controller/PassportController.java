@@ -13,27 +13,27 @@ public class PassportController {
 
     private final PassportService passportService;
 
-    @GetMapping("/api/allPassport")
+    @GetMapping("/api/passport/all")
     public List<Passport> getAllPassport() {
         return passportService.getAllPassport();
     }
 
-    @GetMapping("/api/passportById/{id}")
+    @GetMapping("/api/passport/byId/{id}")
     public Passport getPassportById(@PathVariable("id") Integer id) {
         return passportService.getPassportById(id);
     }
 
-    @PostMapping("/api/createPassport")
+    @PostMapping("/api/passport/create")
     public void createPassport(@RequestBody Passport passport) {
         passportService.createPassport(passport);
     }
 
-    @DeleteMapping("/api/deletePassport/{id}")
+    @DeleteMapping("/api/passport/delete/{id}")
     public void deletePassport(@PathVariable("id") Integer id) {
         passportService.deletePassport(id);
     }
 
-    @PutMapping("/api/updatePassport/{id}")
+    @PutMapping("/api/passport/update/{id}")
     public void updatePassport(@RequestBody Passport passport, @PathVariable("id") Integer id) {
         passportService.updatePassport(passport, id);
     }

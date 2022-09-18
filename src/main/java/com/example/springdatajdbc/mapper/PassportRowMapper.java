@@ -19,13 +19,4 @@ public class PassportRowMapper implements RowMapper<Passport> {
                 .age(rs.getInt("age"))
                 .build();
     }
-
-    public static Map<String, ? extends Serializable> createNewPassport(Passport passport) {
-        return Map.of(
-                "passport_number", passport.getPassportNumber(),
-                "first_name", passport.getFirstName(),
-                "last_name", passport.getLastName(),
-                "age", passport.getAge()
-        );
-    }
 }
