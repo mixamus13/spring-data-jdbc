@@ -21,20 +21,24 @@ public class PassportRepository implements PassportDao {
     public List<Passport> getAllPassport() {
         String sql = "select id, name, email, birth from human limit 100";
 
-        return parameterJdbcOperations.query(sql, new PassportRowMapper());
+        return parameterJdbcOperations.query(sql,
+                new PassportRowMapper());
     }
 
     @Override
     public Passport getPassportById(Integer id) {
         String sql = "select id, name, email, birth from human where id =:id";
 
-        return parameterJdbcOperations.queryForObject(sql, Map.of("id", id), new PassportRowMapper());
+        return parameterJdbcOperations.queryForObject(sql,
+                Map.of("id", id),
+                new PassportRowMapper());
     }
 
     @Override
     public void createPassport(Passport passport) {
         String sql = "insert into passport(passport_number, first_name, last_name, age) " +
                 "values(:passport_number, :first_name, :last_name, :age)";
+
         parameterJdbcOperations.update(sql,
                 createNewPassport(passport));
     }
