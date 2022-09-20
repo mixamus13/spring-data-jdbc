@@ -31,12 +31,13 @@ public class HumanRepository implements DAO<Human> {
     @Override
     public Optional<Human> getById(Integer id) {
         String sql = "select id, name, email, birth from human where id = ?";
-        return jdbcTemplate.query(sql,
+        return Optional.ofNullable(jdbcTemplate.query(sql,
                         new HumanRowMapper(),
                         id)
                 .stream()
                 .filter(Objects::nonNull)
-                .findFirst();
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Human not found by id: " + id)));
     }
 
     @Override

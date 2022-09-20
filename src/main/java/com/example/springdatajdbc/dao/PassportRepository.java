@@ -33,10 +33,11 @@ public class PassportRepository implements DAO<Passport> {
     public Optional<Passport> getById(Integer id) {
         String sql = "select * from passport where id=:id";
 
-        return Optional.ofNullable(parameterJdbcOperations.queryForObject(
-                sql,
-                Map.of("id", id),
-                new PassportRowMapper()));
+        return Optional.ofNullable(Optional.ofNullable(parameterJdbcOperations.queryForObject(
+                        sql,
+                        Map.of("id", id),
+                        new PassportRowMapper()))
+                .orElseThrow(() -> new RuntimeException("Passport not found by id: " + id)));
     }
 
     @Override
