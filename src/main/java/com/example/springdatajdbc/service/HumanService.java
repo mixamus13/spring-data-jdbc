@@ -1,6 +1,6 @@
 package com.example.springdatajdbc.service;
 
-import com.example.springdatajdbc.dao.HumanDao;
+import com.example.springdatajdbc.dao.DAO;
 import com.example.springdatajdbc.model.Human;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,25 +12,25 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HumanService {
 
-    private final HumanDao repository;
+    private final DAO<Human> repository;
 
     public List<Human> getAllHuman() {
-        return repository.getAllHuman();
+        return repository.getAll();
     }
 
-    public Optional<Human> getHumanById(long id) {
-        return repository.getHumanById(id);
+    public Optional<Human> getHumanById(Integer id) {
+        return repository.getById(id);
     }
 
     public void createHuman(Human human) {
-        repository.createHuman(human);
+        repository.create(human);
     }
 
     public void deleteHuman(int id) {
-        repository.deleteHuman(id);
+        repository.delete(id);
     }
 
-    public void updateHuman(Human human, long id) {
-        repository.updateHuman(human, id);
+    public void updateHuman(Human human, Integer id) {
+        repository.update(human, id);
     }
 }

@@ -11,19 +11,19 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class HumanRepository implements HumanDao {
+public class HumanRepository implements DAO<Human> {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Human> getAllHuman() {
+    public List<Human> getAll() {
         String sql = "select id, name, email, birth from human limit 100";
         return jdbcTemplate.query(sql,
                 new HumanRowMapper());
     }
 
     @Override
-    public Optional<Human> getHumanById(long id) {
+    public Optional<Human> getById(Integer id) {
         String sql = "select id, name, email, birth from human where id = ?";
         return jdbcTemplate.query(sql,
                         new HumanRowMapper(),
@@ -33,21 +33,21 @@ public class HumanRepository implements HumanDao {
     }
 
     @Override
-    public void createHuman(Human human) {
+    public void create(Human human) {
         String sql = "insert into human(name, email, birth) values(?, ?, ?)";
         jdbcTemplate.update(sql,
                 human.getName(), human.getEmail(), human.getBirth());
     }
 
     @Override
-    public void deleteHuman(int id) {
+    public void delete(Integer id) {
         String sql = "delete from human where id = ?";
         jdbcTemplate.update(sql,
                 id);
     }
 
     @Override
-    public void updateHuman(Human human, long id) {
+    public void update(Human human, Integer id) {
         String sql = "update human set name = ?, email = ?, birth = ? where id = ?";
         jdbcTemplate.update(sql,
                 human.getName(),

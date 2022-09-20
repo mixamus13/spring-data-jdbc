@@ -8,15 +8,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class PassportRepository implements PassportDao {
+public class PassportRepository implements DAO<Passport> {
 
     private final NamedParameterJdbcOperations parameterJdbcOperations;
 
     @Override
-    public List<Passport> getAllPassport() {
+    public List<Passport> getAll() {
         String sql = "select * from passport limit 100";
 
         return parameterJdbcOperations.query(
@@ -25,19 +26,18 @@ public class PassportRepository implements PassportDao {
     }
 
     @Override
-    public Passport getPassportById(Integer id) {
+    public Optional<Passport> getById(Integer id) {
         String sql = "select * from passport where id=:id";
 
-        return parameterJdbcOperations.queryForObject(
+        return Optional.ofNullable(parameterJdbcOperations.queryForObject(
                 sql,
                 Map.of("id", id),
-                new PassportRowMapper());
+                new PassportRowMapper()));
     }
 
     @Override
-    public void createPassport(Passport passport) {
+    public void create(Passport passport) {
         String sql = "insert into passport(passport_number, first_name, last_name, age) values(:passport_number, :first_name, :last_name, :age)";
-
         parameterJdbcOperations.update(
                 sql,
                 Map.of(
@@ -48,7 +48,7 @@ public class PassportRepository implements PassportDao {
     }
 
     @Override
-    public void updatePassport(Passport passport, Integer id) {
+    public void update(Passport passport, Integer id) {
         String sql = "update passport set passport_number=:passport_number, first_name=:first_name, last_name=:last_name, age=:age where id=:id";
         parameterJdbcOperations.update(
                 sql,
@@ -61,7 +61,7 @@ public class PassportRepository implements PassportDao {
     }
 
     @Override
-    public void deletePassport(Integer id) {
+    public void delete(Integer id) {
         String sql = "delete from passport where id=:id";
         parameterJdbcOperations.update(
                 sql,

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class PassportController {
     }
 
     @GetMapping("/api/passport/byId/{id}")
-    public Passport getPassportById(@PathVariable("id") Integer id) {
+    public Optional<Passport> getPassportById(@PathVariable("id") Integer id) {
         return passportService.getPassportById(id);
     }
 

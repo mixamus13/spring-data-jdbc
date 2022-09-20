@@ -20,7 +20,7 @@ public class HumanController {
     }
 
     @GetMapping("/api/humanById/{id}")
-    public Optional<Human> getHumanById(@PathVariable("id") long id) {
+    public Optional<Human> getHumanById(@PathVariable("id") Integer id) {
         return humanService.getHumanById(id);
     }
 
@@ -30,12 +30,12 @@ public class HumanController {
     }
 
     @DeleteMapping("/api/humanDelete/{id}")
-    public void deleteHuman(@PathVariable("id") int id) {
+    public void deleteHuman(@PathVariable("id") Integer id) {
         humanService.deleteHuman(id);
     }
 
     @PutMapping("/api/humanUpdate/{id}")
-    public void updateHuman(@RequestBody Human human, @PathVariable("id") long id) {
+    public void updateHuman(@RequestBody Human human, @PathVariable("id") Integer id) {
         humanService.updateHuman(human, id);
     }
 }

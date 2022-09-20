@@ -1,35 +1,36 @@
 package com.example.springdatajdbc.service;
 
-import com.example.springdatajdbc.dao.PassportDao;
+import com.example.springdatajdbc.dao.DAO;
 import com.example.springdatajdbc.model.Passport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PassportService {
 
-    private final PassportDao passportDao;
+    private final DAO<Passport> passportDao;
 
     public List<Passport> getAllPassport() {
-        return passportDao.getAllPassport();
+        return passportDao.getAll();
     }
 
-    public Passport getPassportById(Integer id) {
-        return passportDao.getPassportById(id);
+    public Optional<Passport> getPassportById(Integer id) {
+        return passportDao.getById(id);
     }
 
     public void createPassport(Passport passport) {
-        passportDao.createPassport(passport);
+        passportDao.create(passport);
     }
 
     public void deletePassport(Integer id) {
-        passportDao.deletePassport(id);
+        passportDao.delete(id);
     }
 
     public void updatePassport(Passport passport, Integer id) {
-        passportDao.updatePassport(passport, id);
+        passportDao.update(passport, id);
     }
 }
