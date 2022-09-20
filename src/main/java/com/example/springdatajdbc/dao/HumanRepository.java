@@ -3,14 +3,18 @@ package com.example.springdatajdbc.dao;
 import com.example.springdatajdbc.mapper.HumanRowMapper;
 import com.example.springdatajdbc.model.Human;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-@Repository
+@Slf4j
 @RequiredArgsConstructor
+@Repository
 public class HumanRepository implements DAO<Human> {
 
     private final JdbcTemplate jdbcTemplate;
@@ -18,8 +22,10 @@ public class HumanRepository implements DAO<Human> {
     @Override
     public List<Human> getAll() {
         String sql = "select id, name, email, birth from human limit 100";
-        return jdbcTemplate.query(sql,
+        List<Human> humans = jdbcTemplate.query(sql,
                 new HumanRowMapper());
+        log.info("Get all humans: {}", humans);
+        return humans;
     }
 
     @Override
@@ -29,14 +35,18 @@ public class HumanRepository implements DAO<Human> {
                         new HumanRowMapper(),
                         id)
                 .stream()
+                .filter(Objects::nonNull)
                 .findFirst();
     }
 
     @Override
     public void create(Human human) {
         String sql = "insert into human(name, email, birth) values(?, ?, ?)";
-        jdbcTemplate.update(sql,
+        int insert = jdbcTemplate.update(sql,
                 human.getName(), human.getEmail(), human.getBirth());
+        if (insert == 1) {
+            log.info("Create new human is id: {}", human.getId());
+        }
     }
 
     @Override
@@ -49,10 +59,13 @@ public class HumanRepository implements DAO<Human> {
     @Override
     public void update(Human human, Integer id) {
         String sql = "update human set name = ?, email = ?, birth = ? where id = ?";
-        jdbcTemplate.update(sql,
+        int update = jdbcTemplate.update(sql,
                 human.getName(),
                 human.getEmail(),
                 human.getBirth(),
                 id);
+        if (update == 1) {
+            log.info("Human updated: {}", human);
+        }
     }
 }
