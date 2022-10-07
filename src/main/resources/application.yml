@@ -9,6 +9,17 @@ spring:
     driver-class-name: org.postgresql.Driver
   flyway:
     enabled: true
+  application:
+    name: spring-data-jdbc
+
+#spring:
+#  datasource:
+#    url: "jdbc:oracle:thin:@localhost:1521:XE"
+#    username: "SYSTEM"
+#    password: "oracle"
+#    driver-class-name: oracle.jdbc.driver.OracleDriver
+#  flyway:
+#    enabled: true
 
 logging:
   level:
